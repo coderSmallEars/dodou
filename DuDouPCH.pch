@@ -1,0 +1,76 @@
+//
+//  DuDouPCH.pch
+//  DuDou
+//
+//  Created by jinyulong on 2017/6/5.
+//  Copyright © 2017年 GhostShell. All rights reserved.
+//
+
+#ifndef DuDouPCH_pch
+#define DuDouPCH_pch
+
+#import "LocationController.h"
+#import "RouteController.h"
+#import "RecordController.h"
+#import "RelativeController.h"
+#import "WhiteListController.h"
+
+#import "Student.h"
+
+#import <YYkit.h>
+#import <MBProgressHUD.h>
+#import <AFNetworking.h>
+#import <MAMapKit/MAMapKit.h>
+#import <AMapSearchKit/AMapSearchKit.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
+
+#define kImageResource(string) [UIImage imageNamed:StringNotNull(string)]
+
+UIKIT_STATIC_INLINE NSString *StringNotNull(NSString *string) {
+    
+    if (string == nil || string == NULL || ![string isKindOfClass:[NSString class]]){
+        return @"";
+    }else {
+        return string;
+    }
+}
+
+UIKIT_STATIC_INLINE NSNumber *NumberNotNull(NSNumber *number){
+    if (number == nil || number == NULL || ![number isKindOfClass:[NSNumber class]]){
+        return @0;
+    }else {
+        return number;
+    }
+}
+
+UIKIT_STATIC_INLINE NSArray *ArrayNotNull(NSArray *array){
+    if (array == nil || array == NULL ||![array isKindOfClass:[NSArray class]]) {
+        return [@[] copy];
+    }else{
+        return array;
+    }
+}
+
+UIKIT_STATIC_INLINE NSDictionary *DictionaryNotNull(NSDictionary *dictionary){
+    if (dictionary == nil || ![dictionary isKindOfClass:[NSDictionary class]]) {
+        return [@{} copy];
+    }else{
+        return dictionary;
+    }
+}
+
+#define Valid_Dictionary(dic) (dic && [dic isKindOfClass:[NSDictionary class]])
+#define Valid_Array(array) (array && [array isKindOfClass:[NSArray class]])
+#define Valid_Number(number) (number && [number isKindOfClass:[NSNumber class]])
+#define Valid_String(string) (string && [string isKindOfClass:[NSString class]] && [string length] > 0)
+
+typedef void(^VoidBlock)(void);
+typedef void(^ObjBlock)(id obj);
+typedef id(^ReturnObjBlock)(void);
+typedef void(^callBackResulBlock)(BOOL isSuccess, id data);
+
+#import "DataCenter.h"
+
+#import "UIView+YLCategory.h"
+
+#endif /* DuDouPCH_pch */
