@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="04C-rI-OJI">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qq" highlightedImage="qq_h" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="04C-rI-OJI">
                         <rect key="frame" x="20" y="10" width="60" height="59.5"/>
                         <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -78,4 +78,8 @@
             <point key="canvasLocation" x="34" y="164"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="qq" width="55" height="55"/>
+        <image name="qq_h" width="55" height="55"/>
+    </resources>
 </document>

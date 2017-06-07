@@ -93,9 +93,11 @@
     CommonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"relativeCell"];
     Relative *relative = nil;
     if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] -1) {
+        cell.imgView.highlighted = NO;
         cell.pushNum.text = @"未定义";
         [cell.editBtn setTitle:@"添加" forState:UIControlStateNormal];
     }else{
+        cell.imgView.highlighted = YES;
         [cell.editBtn setTitle:@"编辑" forState:UIControlStateNormal];
         relative = self.relatives[indexPath.row];
         cell.pushNum.text = [NSString stringWithFormat:@"%@",relative.name];

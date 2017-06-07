@@ -13,8 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.imgView.layer.cornerRadius = 2;
+    self.imgView.layer.cornerRadius = 16;
     self.imgView.layer.masksToBounds = YES;
+    self.imgView.highlighted = YES;
     self.editBtn.layer.cornerRadius = 2;
     self.editBtn.layer.masksToBounds = YES;
     self.editBtn.layer.borderColor = [UIColor orangeColor].CGColor;

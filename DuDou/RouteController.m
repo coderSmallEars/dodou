@@ -113,6 +113,11 @@
 
 - (void)drawLines{
     //构造折线数据对象
+    if (!self.routes.count) {
+        [self clreanAnnotationInfo];
+        [self.view postProgressHudWithMessage:@"无法获取有效的位置信息"];
+        return ;
+    }
     CLLocationCoordinate2D commonPolylineCoords[self.routes.count];
     for (int i = 0; i < self.routes.count; i++) {
         Route *route = self.routes[i];
@@ -120,9 +125,6 @@
         commonPolylineCoords[i].longitude = [NumberNotNull(route.lng) doubleValue];;
     }
     MAPolyline *commonPolyline = [MAPolyline polylineWithCoordinates:commonPolylineCoords count:self.routes.count];
-    if (self.overLay) {
-        [self.mapView removeOverlay:self.overLay];
-    }
     [self.mapView addOverlay: commonPolyline];
     self.overLay = commonPolyline;
     
@@ -131,15 +133,22 @@
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(NumberNotNull(route.lat).doubleValue, NumberNotNull(route.lng).doubleValue) animated:YES];
 }
 
-- (void)annotationAnimation:(CLLocationCoordinate2D *)commonPolylineCoords{
-    self.annotation.coordinate = commonPolylineCoords[0];
-    
+- (void)clreanAnnotationInfo{
+    if (self.overLay) {
+        [self.mapView removeOverlay:self.overLay];
+    }
     for (MAAnnotationMoveAnimation *animation in [self.annotation allMoveAnimations]) {
         [animation cancel];
     }
+    [self.mapView removeAnnotation:self.annotation];
+}
+
+- (void)annotationAnimation:(CLLocationCoordinate2D *)commonPolylineCoords{
+    self.annotation.coordinate = commonPolylineCoords[0];
+    
+
     [self.annotation addMoveAnimationWithKeyCoordinates:commonPolylineCoords count:self.routes.count withDuration:0.3 * self.routes.count withName:nil completeCallback:^(BOOL isFinished) {
     }];
-    [self.mapView removeAnnotation:self.annotation];
     [self.mapView addAnnotation:self.annotation];
 }
 

@@ -63,6 +63,7 @@
 }
 
 - (void)requestStudents{
+    [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     [DataCengerSingleton getDataWithPath:[NSString stringWithFormat:@"%@listMyChildren",ctx] params:nil success:^(id obj) {
         if (!Valid_Array(obj)) {
         }
@@ -80,8 +81,10 @@
             self.selectedStudent = mutibleStudents.firstObject;
             [self requestStudentLocation];
         }
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
     } failure:^(id obj) {
         NSLog(@"获取学生信息失败");
+        [MBProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow animated:YES];
     }];
 }
 
@@ -107,6 +110,10 @@
     }
     CLLocationDegrees lat = [NumberNotNull(info[@"lat"]) doubleValue];
     CLLocationDegrees lng = [NumberNotNull(info[@"lng"]) doubleValue];
+    if (lat == 0.f || lng == 0.f) {
+        [self.view postProgressHudWithMessage:@"无法获取有效的位置信息"];
+        return ;
+    }
     MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
     pointAnnotation.title = StringNotNull(info[@"personName"]);
     pointAnnotation.coordinate = CLLocationCoordinate2DMake(lat, lng);
