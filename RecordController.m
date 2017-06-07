@@ -114,11 +114,11 @@
     Record *record = self.records[indexPath.row];
     if ([StringNotNull(record.type) isEqualToString:@"in"]) {
         cell.indicateLabel.text = @"入";
-        cell.indicateLabel.backgroundColor = [UIColor blueColor];
+        cell.indicateLabel.backgroundColor = [UIColor cyanColor];
         cell.contentLabel.text = [NSString stringWithFormat:@"%@ 进入学校",record.time];
     }else{
         cell.indicateLabel.text = @"出";
-        cell.indicateLabel.backgroundColor = [UIColor redColor];
+        cell.indicateLabel.backgroundColor = [UIColor orangeColor];
         cell.contentLabel.text = [NSString stringWithFormat:@"%@ 离开学校",record.time];
     }
     return cell;

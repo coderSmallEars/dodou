@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 @class Student;
 
-static NSString *const base = @"http://www.jytechjxt.com.cn:8080/";
-static NSString *const ctx = @"http://www.jytechjxt.com.cn:8080/jxt/mobile/";
+static NSString *const base = @"http://www.dudoutech.com:8080/";
+static NSString *const ctx = @"http://www.dudoutech.com:8080/jxt/mobile/";
 
 #define DataCengerSingleton [DataCenter singleton]
 

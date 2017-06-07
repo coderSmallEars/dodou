@@ -21,9 +21,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];\
     LoginController *login = [[LoginController alloc] initWithNibName:@"LoginController" bundle:nil];
     self.window.rootViewController = login;
-    login.loginBlock = ^{
-        self.window.rootViewController = [self rootViewController];
-    };
     [self.window makeKeyAndVisible];
     // Override point for customization after application launch.
     return YES;

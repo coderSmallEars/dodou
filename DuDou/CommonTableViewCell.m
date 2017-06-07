@@ -13,6 +13,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.imgView.layer.cornerRadius = 2;
+    self.imgView.layer.masksToBounds = YES;
+    self.editBtn.layer.cornerRadius = 2;
+    self.editBtn.layer.masksToBounds = YES;
+    self.editBtn.layer.borderColor = [UIColor orangeColor].CGColor;
+    self.editBtn.layer.borderWidth = 1;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

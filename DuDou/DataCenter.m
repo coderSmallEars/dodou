@@ -86,6 +86,7 @@
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
         AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
+        responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
         _manager.responseSerializer = responseSerializer;
     }
     return _manager;

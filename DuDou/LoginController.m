@@ -20,8 +20,8 @@
 }
 
 - (IBAction)loginAction:(UIButton *)sender {
-    NSString *username = @"13631585649"; StringNotNull(self.phoneNumField.text);
-    NSString *password = @"111111"; StringNotNull(self.passwordField.text);
+    NSString *username = StringNotNull(self.phoneNumField.text);
+    NSString *password = StringNotNull(self.passwordField.text);
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [DataCengerSingleton postDataWithPath:[NSString stringWithFormat:@"%@login",ctx] params:@{@"userName":username,@"password":password} success:^(id obj) {
         [self updateRootViewController];
@@ -75,11 +75,19 @@
     UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:title image:image selectedImage:selectedImage];
     [item setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],}  forState:UIControlStateHighlighted];
     [item setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor grayColor]} forState:UIControlStateNormal];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:60 green:220 blue:220 alpha:1]} forState:UIControlStateSelected];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor cyanColor]} forState:UIControlStateSelected];
     
     item.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     item.titlePositionAdjustment =  UIOffsetMake(0, -3);
     return item;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    for (UITouch *touch in touches) {
+        if (![touch.view isKindOfClass:[UITextField class]]) {
+            [self.view endEditing:YES];
+        }
+    }
 }
 
 @end
