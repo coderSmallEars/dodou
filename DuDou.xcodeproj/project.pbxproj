@@ -370,7 +370,7 @@
 				TargetAttributes = {
 					8A5191961EE5023300F37A3B = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 3YH7J477D3;
+						DevelopmentTeam = F4JZPRNW5G;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -604,13 +604,16 @@
 			baseConfigurationReference = 0B53506FD913573D4BA70D39 /* Pods-DuDou.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3YH7J477D3;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F4JZPRNW5G;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DuDouPCH.pch";
 				INFOPLIST_FILE = DuDou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = GhostShell.DuDou;
+				PRODUCT_BUNDLE_IDENTIFIER = JiuZi.DuDou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -620,13 +623,15 @@
 			baseConfigurationReference = A3610A2B6A6AB56D642E96EA /* Pods-DuDou.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3YH7J477D3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = F4JZPRNW5G;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/DuDouPCH.pch";
 				INFOPLIST_FILE = DuDou/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = GhostShell.DuDou;
+				PRODUCT_BUNDLE_IDENTIFIER = JiuZi.DuDou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

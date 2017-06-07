@@ -125,11 +125,13 @@
         if (relative) {
             relative.name = name;
             relative.number = @(number.integerValue);
+            [self modifyRelative:relative];
         }else{
             Relative *new = [Relative new];
             new.name = name;
             new.number = @(number.integerValue);
             self.relatives = [self.relatives arrayByAddingObject:new];
+            [self addRelative:new];
         }
         [self.listTableView reloadData];
     };
@@ -139,6 +141,58 @@
         whiteListCtrl.name = relative.name;
         whiteListCtrl.phoneNum = [NSString stringWithFormat:@"%@",relative.number];
     }
+}
+
+- (void)modifyRelative:(Relative *)relative{
+    NSMutableDictionary *params = [@{} mutableCopy];
+    [params setObject:StringNotNull(self.selectedStudent.mobile) forKey:@"mobile"];
+    params[@"name"] = StringNotNull(relative.name);
+    params[@"number"] = [NSString stringWithFormat:@"%@",relative.number];
+    params[@"id"] = [NSString stringWithFormat:@"%@",relative.key];
+    params[@"mobile"] = StringNotNull(self.selectedStudent.mobile);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [DataCengerSingleton getDataWithPath:[NSString stringWithFormat:@"%@jxt/safeCard/updateWhiteList",base] params:params success:^(id obj) {
+        NSMutableArray *tempRelatives = [@[] mutableCopy];
+        if (Valid_Array(obj)) {
+            for (NSDictionary *dic in obj) {
+                [tempRelatives addObject:[Relative modelWithJSON:dic]];
+            }
+            self.relatives = [tempRelatives copy];
+            [self.listTableView reloadData];
+            [self.view postProgressHudWithMessage:@"修改成功"];
+        }else{
+//            [self.view postProgressHudWithMessage:@"修改失败"];
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(id obj) {
+//        [self.view postProgressHudWithMessage:@"修改失败"];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
+}
+
+- (void)addRelative:(Relative *)relative{
+    NSMutableDictionary *params = [@{} mutableCopy];
+    [params setObject:StringNotNull(self.selectedStudent.mobile) forKey:@"mobile"];
+    params[@"name"] = StringNotNull(relative.name);
+    params[@"number"] = [NSString stringWithFormat:@"%@",relative.number];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [DataCengerSingleton getDataWithPath:[NSString stringWithFormat:@"%@jxt/safeCard/createWhiteList",base] params:params success:^(id obj) {
+        NSMutableArray *tempRelatives = [@[] mutableCopy];
+        if (Valid_Array(obj)) {
+            for (NSDictionary *dic in obj) {
+                [tempRelatives addObject:[Relative modelWithJSON:dic]];
+            }
+            self.relatives = [tempRelatives copy];
+            [self.listTableView reloadData];
+            [self.view postProgressHudWithMessage:@"添加成功"];
+        }else{
+//            [self.view postProgressHudWithMessage:@"添加失败"];
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(id obj) {
+//        [self.view postProgressHudWithMessage:@"添加失败"];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 
 - (NSArray<Relative *> *)relatives{

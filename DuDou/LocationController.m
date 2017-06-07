@@ -17,6 +17,9 @@
 @property (nonatomic, strong) Student *selectedStudent;
 @property (nonatomic, strong) NSMutableArray *annotations;
 
+@property (weak, nonatomic) IBOutlet UILabel *hintView;
+@property (nonatomic, strong) UILabel *hintLabel;
+
 @end
 
 @implementation LocationController
@@ -24,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"定位";
-    [self.view addSubview:self.mapView];
+    [self.view addSubview:self.mapView];    
     [self requestStudents];
 }
 
@@ -86,10 +89,13 @@
     [DataCengerSingleton getDataWithPath:[NSString stringWithFormat:@"%@lbs/locationRecord/last",base] params:@{@"mobile":StringNotNull(self.selectedStudent.mobile)} success:^(id obj) {
         if (Valid_Dictionary(obj)) {
             [self showPositionOnMap:obj];
+            [self setHintView:obj];
         }else{
             NSLog(@"获取位置信息失败");
+            [self setHintView:nil];
         }
     } failure:^(id obj) {
+        [self setHintView:nil];
         NSLog(@"获取位置信息失败");
     }];
 }
@@ -107,6 +113,20 @@
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(lat, lng)];
     [self.mapView addAnnotation:pointAnnotation];
     [self.annotations addObject:pointAnnotation];
+}
+
+- (void)setHintView:(NSDictionary *)info{
+    if (!Valid_Dictionary(info)) {
+        self.hintView.text = nil;
+        return;
+    }
+    NSString *time =[NSString stringWithFormat:@"时间：%@",info[@"time"]];
+    NSString *desc = [NSString stringWithFormat:@"%@",info[@"desc"]];
+    NSString *location = [NSString stringWithFormat:@"经纬度：[%f,%f]。",[NumberNotNull(info[@"lat"]) doubleValue],[NumberNotNull(info[@"lng"]) doubleValue]];
+    NSString *content = [NSString stringWithFormat:@"%@\n%@\n%@\n提示：10分钟后刷新",time,desc,location];
+    self.hintView.text = content;
+    NSLog(@"%@", content);
+    self.hintLabel.text = content;
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation
@@ -133,20 +153,7 @@
         
         [AMapServices sharedServices].enableHTTPS = YES;
         _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, self.view.top + 70, self.view.width, self.view.bottom - 70)];
-        _mapView.delegate = self;
-//        ///把地图添加至view
-//        _mapView.showsUserLocation = YES;
-//        _mapView.userTrackingMode = MAUserTrackingModeFollow;
-//        MAUserLocationRepresentation *r = [[MAUserLocationRepresentation alloc] init];
-//        r.showsAccuracyRing = NO;///精度圈是否显示，默认YES
-//        r.showsHeadingIndicator = NO;///是否显示方向指示(MAUserTrackingModeFollowWithHeading模式开启)。默认为YES
-//        r.fillColor = [UIColor redColor];///精度圈 填充颜色, 默认 kAccuracyCircleDefaultColor
-//        r.strokeColor = [UIColor blueColor];///精度圈 边线颜色, 默认 kAccuracyCircleDefaultColor
-//        r.lineWidth = 2;///精度圈 边线宽度，默认0
-//        
-//        r.image = [UIImage imageNamed:@"你的图片"]; ///定位图标, 与蓝色原点互斥
-//        [_mapView updateUserLocationRepresentation:r];
-    }
+        _mapView.delegate = self;    }
     return _mapView;
 }
 
@@ -155,6 +162,14 @@
         _annotations = [@[] mutableCopy];
     }
     return _annotations;
+}
+
+- (UILabel *)hintLabel{
+    if (!_hintLabel) {
+        _hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bottom - 84, 0, kScreenWidth, 84)];
+        _hintLabel.numberOfLines = 4;
+    }
+    return _hintLabel;
 }
 
 @end
