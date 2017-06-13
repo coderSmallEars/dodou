@@ -113,8 +113,8 @@
 
 - (void)drawLines{
     //构造折线数据对象
+    [self clreanAnnotationInfo];
     if (!self.routes.count) {
-        [self clreanAnnotationInfo];
         [self.view postProgressHudWithMessage:@"无法获取有效的位置信息"];
         return ;
     }
@@ -136,6 +136,7 @@
 - (void)clreanAnnotationInfo{
     if (self.overLay) {
         [self.mapView removeOverlay:self.overLay];
+        self.overLay = nil;
     }
     for (MAAnnotationMoveAnimation *animation in [self.annotation allMoveAnimations]) {
         [animation cancel];

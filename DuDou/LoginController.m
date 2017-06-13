@@ -8,6 +8,8 @@
 
 #import "LoginController.h"
 
+#define isTest 0
+
 @interface LoginController ()
 
 @end
@@ -22,6 +24,10 @@
 - (IBAction)loginAction:(UIButton *)sender {
     NSString *username = StringNotNull(self.phoneNumField.text);
     NSString *password = StringNotNull(self.passwordField.text);
+    if (isTest) {
+        username = @"13631585649";
+        password = @"111111";
+    }
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [DataCengerSingleton postDataWithPath:[NSString stringWithFormat:@"%@login",ctx] params:@{@"userName":username,@"password":password} success:^(id obj) {
         [self updateRootViewController];
